@@ -1,31 +1,30 @@
 import { supabase } from '../utils/supabase'
-import { Inter } from 'next/font/google'
+import Link from 'next/link'
 
-const inter = Inter({ subsets: ['latin'] })
-
-type Notes = {
-  [key: string]: {
-    title: string;
-    description: string;
-  }
-}
+import { Note, Notes } from '../types'
 
 export default function Home({ notes }: { notes: Notes}) {
 
   console.log({ notes })
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+      className={`w-full max-w-3xl mx-auto my-16 px-2`}
     >
-      {notes.map((note: any) => (
-        <p key={note.id}>{note.title}</p>
+      {notes.map((note: Note) => (
+        <Link 
+          key={note.id} 
+          href={`/${note.id}`} 
+          className="p-8 h-40 mb-4 roundeed shadow test-xl flex"
+        >
+          {note.title}
+        </Link>
       ))}
     </main>
   )
 }
 
 export const getStaticProps = async () => {
-  let { data: notes } = await supabase.from('notes').select('*')
+  const { data: notes } = await supabase.from('notes').select('*')
 
   return {
     props: {
