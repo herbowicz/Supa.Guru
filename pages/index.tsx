@@ -5,7 +5,8 @@ import { Note, Notes } from '../types'
 
 export default function Home({ notes }: { notes: Notes}) {
 
-  console.log({ notes })
+  supabase.auth.getUser().then((user) => console.log(user.data.user))
+
   return (
     <main
       className={`w-full max-w-3xl mx-auto my-16 px-2`}
