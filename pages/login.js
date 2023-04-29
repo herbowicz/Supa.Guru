@@ -4,7 +4,7 @@ import { supabase } from '../utils/supabase'
 const Login = () => {
     useEffect (() => {
         supabase.auth.signInWithOAuth({
-            provider: 'google'
+            provider: ['github']
         })
     }, [])
 

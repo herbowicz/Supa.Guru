@@ -8,7 +8,7 @@ export default function Home({ notes }: { notes: Notes}) {
   supabase.auth.getUser().then((user) => console.log(user.data.user))
 
   return (
-    <main
+    <div
       className={`w-full max-w-3xl mx-auto my-16 px-2`}
     >
       {notes.map((note: Note) => (
@@ -20,7 +20,8 @@ export default function Home({ notes }: { notes: Notes}) {
           {note.title}
         </Link>
       ))}
-    </main>
+
+    </div>
   )
 }
 
