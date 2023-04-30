@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useUser } from '../context/user'
 
 export default function Home({ notes }) {
-  const user = useUser()
+  const { user } = useUser()
   console.log(user)
 
   return (

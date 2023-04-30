@@ -11,14 +11,13 @@ const Provider = ({ children }) => {
     useEffect(() => {
 
         const getUserProfile = async () => {
-
             const { data: { user } } = await supabase.auth.getUser()
 
             if (user) {
                 const { data: profile } = await supabase
                     .from('profile').select('*').eq('id', user.id).single()
 
-                console.log('!!!!', user, profile)
+                // console.log('!!!!', user, profile)
                 
                 setUser({
                     ...user,
