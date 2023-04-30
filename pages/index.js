@@ -1,17 +1,16 @@
 import { supabase } from '../utils/supabase'
 import Link from 'next/link'
+import { useUser } from '../context/user'
 
-import { Note, Notes } from '../types'
-
-export default function Home({ notes }: { notes: Notes}) {
-
-  supabase.auth.getUser().then((user) => console.log(user.data.user))
+export default function Home({ notes }) {
+  const user = useUser()
+  console.log('nasz', user)
 
   return (
     <div
       className={`w-full max-w-3xl mx-auto my-16 px-2`}
     >
-      {notes.map((note: Note) => (
+      {notes.map((note) => (
         <Link 
           key={note.id} 
           href={`/${note.id}`} 
