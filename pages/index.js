@@ -4,7 +4,7 @@ import { useUser } from '../context/user'
 
 export default function Home({ notes }) {
   const user = useUser()
-  console.log('nasz', user)
+  console.log(user)
 
   return (
     <div
