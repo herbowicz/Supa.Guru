@@ -5,7 +5,7 @@ const Shop = ({ products }) => {
     return (
         <div className='w-full max-w-3xl mx-auto py-16 flex justiify-around'>
             {products.map(el => (
-                <div key={el.id} className='w-80 h-40 rounded shadow px-6 py-3'>
+                <div key={el.id} className='w-80 h-80 rounded shadow bg-blue-900 px-6 py-3 mx-5'>
                     <h2 className='text-xl'>{el.name}</h2>
                     <Image src={el.photo} alt='' width='200' height='200' /> 
                     <p className='text-grey-500'>
@@ -39,9 +39,11 @@ export const getStaticProps = async () => {
         })
     )
 
+    const sortedProducts = products.sort((a, b) => a.price - b.price)
+
     return {
         props: {
-            products,
+            products: sortedProducts
         }
     }
 }
