@@ -1,33 +1,30 @@
 import { createContext, useContext, useState, useEffect } from "react"
-import { supabase } from "../utils/supabase"
 import { useRouter } from 'next/router'
+import { supabase } from "../utils/supabase"
     
 const Context = createContext()
 
 const Provider = ({ children }) => {
     const router = useRouter()
     const [user, setUser] = useState()
+    const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
-
         const getUserProfile = async () => {
             const { data: { user } } = await supabase.auth.getUser()
 
             if (user) {
                 const { data: profile } = await supabase
                     .from('profile').select('*').eq('id', user.id).single()
-
                 // console.log('!!!!', user, profile)
-                
                 setUser({
                     ...user,
                     ...profile
                 })
+                setLoading(false)
             }
         }
-
         getUserProfile()
-
         supabase.auth.onAuthStateChange(() => {
             getUserProfile()
         })
@@ -48,7 +45,8 @@ const Provider = ({ children }) => {
     const exposed = {
         user,
         login,
-        logout
+        logout,
+        isLoading
     }
 
     return (

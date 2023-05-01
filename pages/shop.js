@@ -1,16 +1,34 @@
 import initStripe from 'stripe'
 import Image from 'next/image'
+import { useUser } from '../context/user'
 
-const Shop = ({ products }) => {
+const Shop = ({ products, isLoading }) => {
+    const { user, login } = useUser()
+
+    const showSubscribeButton = !!user && !user.is_subscribed
+    const showCreateAccountButton = !user
+    const showManageSubscriptionButton = !!user && user.is_subscribed
+
+    const processSubscription = priceId => {
+        console.log(priceId)
+    }
+
     return (
         <div className='w-full max-w-3xl mx-auto py-16 flex justiify-around'>
             {products.map(el => (
-                <div key={el.id} className='w-80 h-80 rounded shadow bg-blue-900 px-6 py-3 mx-5'>
+                <div key={el.id} className='w-80 h-80 rounded shadow bg-indigo-900 px-6 py-3 mx-5 flex flex-col justify-around items-center'>
                     <h2 className='text-xl'>{el.name}</h2>
-                    <Image src={el.photo} alt='' width='200' height='200' /> 
+                    <Image src={el.photo} alt='' width='200' height='200' />
                     <p className='text-grey-500'>
-                        ${el.price/100} / {el.interval}
+                        {el.price / 100} PLN / {el.interval}
                     </p>
+                    {isLoading || (
+                        <> 
+                            {showSubscribeButton && <button onClick={() => processSubscription(el.id)}>Subscribe</button>}
+                            {showCreateAccountButton && <button onClick={login}>Create Account</button>}
+                            {showManageSubscriptionButton && <button onClick={login}>Manage Subscription</button>}
+                        </>
+                    )}
                 </div>
             ))}
             <hr />
