@@ -1,79 +1,44 @@
+// pages/profile.js
 import {
-  useSessionContext,
-  useSupabaseClient,
-  useUser
-} from '@supabase/auth-helpers-react'
-import { Auth } from '@supabase/auth-ui-react'
-import type { NextPage } from 'next'
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { Database } from '../types/db_types'
+  createServerSupabaseClient,
+  User
+} from '@supabase/auth-helpers-nextjs';
+import { GetServerSidePropsContext } from 'next';
+import Link from 'next/link';
 
-const Profile: NextPage = () => {
-  const { isLoading, session, error } = useSessionContext()
-  const user = useUser()
-  const supabaseClient = useSupabaseClient<Database>()
-
-  const [data, setData] = useState(null)
-
-  useEffect(() => {
-    async function loadData() {
-      const { data } = await supabaseClient.from('profile').select('*').eq('id', user?.id).single()
-      setData(data)
-    }
-
-    if (user) loadData()
-  }, [user, supabaseClient])
-
-  if (!session)
-    return (
-      <>
-        {error && <p>{error.message}</p>}
-        {isLoading ? <h1>Loading...</h1> : <h1>Loaded!</h1>}
-        <button
-          onClick={() => {
-            supabaseClient.auth.signInWithOAuth({
-              provider: 'github',
-              options: { scopes: 'repo', redirectTo: 'http://localhost:3000' }
-            })
-          }}
-        >
-          Login with github
-        </button>
-        <Auth
-          redirectTo="http://localhost:3000"
-          // view="update_password"
-          supabaseClient={supabaseClient}
-          providers={['google', 'facebook', 'github']}
-          // scopes={{github: 'repo'}} // TODO: enable scopes in Auth component.
-          socialLayout="horizontal"
-        />
-      </>
-    )
-
+export default function Profile({ user }: { user: User }) {
   return (
     <>
       <p>
-        [<Link href="/profile">getServerSideProps</Link>] | [
-        <Link href="/protected-page">server-side RLS</Link>] |{' '}
-        <button
-          onClick={() =>
-            supabaseClient.auth.updateUser({ data: { test1: 'updated' } })
-          }
-        >
-          Update user metadata
-        </button>
-        <button onClick={() => supabaseClient.auth.refreshSession()}>
-          Refresh session
-        </button>
+        [<Link href="/">Home</Link>] | [
+        <Link href="/protected-page">server-side RLS</Link>]
       </p>
-      {isLoading ? <h1>Loading...</h1> : <h1>Loaded!</h1>}
-      <p>user:</p>
-      <pre>{JSON.stringify(session, null, 2)}</pre>
-      <p>client-side data fetching with RLS</p>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <div>Hello {user.email}</div>
+      <pre>{JSON.stringify(user, null, 2)}</pre>
     </>
-  )
+  );
 }
 
-export default Profile
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  // Create authenticated Supabase Client
+  const supabase = createServerSupabaseClient(ctx);
+  // Check if we have a session
+  const {
+    data: { session }
+  } = await supabase.auth.getSession();
+
+  if (!session)
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    };
+
+  return {
+    props: {
+      initialSession: session,
+      user: session.user
+    }
+  };
+};
