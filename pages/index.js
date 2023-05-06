@@ -1,35 +1,14 @@
-import { supabase } from '../utils/supabase'
-import Link from 'next/link'
-import { useUser } from '../context/user'
+import Welcome from '../components/welcome'
 
-export default function Home({ notes }) {
-  const { user } = useUser()
-  console.log(user)
-
-  return (
-    <div
-      className={`w-full max-w-3xl mx-auto my-16 px-2`}
-    >
-      {notes.map((note) => (
-        <Link 
-          key={note.id} 
-          href={`/${note.id}`} 
-          className="p-8 h-40 mb-4 roundeed shadow test-xl flex"
-        >
-          {note.title}
-        </Link>
-      ))}
-
-    </div>
-  )
+const Hi = () => {
+    return (
+        <div className={`w-full max-w-sm mx-auto my-5 px-2`}>
+            <div >
+                <h1 className={`text-center text-5xl text-green-400 font-thin leading-loose`}>Supa Guru</h1>
+            </div>
+            <Welcome />
+        </div>
+    )
 }
 
-export const getStaticProps = async () => {
-  const { data: notes } = await supabase.from('notes').select('*')
-
-  return {
-    props: {
-      notes
-    }
-  }
-}
+export default Hi
