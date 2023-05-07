@@ -36,7 +36,7 @@ export default function Welcome() {
     return (
       <div>
         <p className={`my-5`}>
-          Welcome {session.user.email}
+          Welcome {session.user.identity_data.name}
         </p>
         <p className={`text-xs`}>
           {JSON.stringify(session.user.identities[0], null, 2)}
