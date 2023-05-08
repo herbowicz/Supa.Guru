@@ -1,10 +1,11 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useRouter } from 'next/router'
-import { supabase } from "../utils/supabase"
-    
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
+
 const Context = createContext()
 
 const Provider = ({ children }) => {
+    const supabase = useSupabaseClient()
     const router = useRouter()
     const [user, setUser] = useState()
     const [isLoading, setLoading] = useState(true)
@@ -16,7 +17,7 @@ const Provider = ({ children }) => {
             if (user) {
                 const { data: profile } = await supabase
                     .from('profile').select('*').eq('id', user.id).single()
-                // console.log('!!!!', user, profile)
+
                 setUser({
                     ...user,
                     ...profile
@@ -29,6 +30,8 @@ const Provider = ({ children }) => {
             getUserProfile()
         })
     }, [])
+
+    useEffect(() => console.log(user))
 
     const login = async () => {
         supabase.auth.signInWithOAuth({
