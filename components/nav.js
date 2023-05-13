@@ -9,6 +9,7 @@ const Nav = () => {
             {user && <div>Points: {user?.points}</div>}
             <Link href='/'>Home</Link>
             <Link href='/shop'>Shop</Link>
+            <Link href='/user'>User</Link>
             <Link href='/notes'>Notes</Link>
             {user && <Link href='/logout'>Logout</Link>}
         </nav>

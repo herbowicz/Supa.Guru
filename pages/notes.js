@@ -13,7 +13,7 @@ export default function Notes({ notes }) {
       {notes.map((note) => (
         <Link 
           key={note.id} 
-          href={`/${note.id}`} 
+          href={`/notes/${note.id}`} 
           className="p-8 h-40 mb-4 roundeed shadow test-xl flex"
         >
           {note.title}
