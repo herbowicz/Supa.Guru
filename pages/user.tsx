@@ -7,7 +7,7 @@ const User = () => {
   return (
     <>
       <Link href="/"> Home </Link>
-      <div> Hello {user.email} </div>
+      <div> Hello {user?.email} </div>
       <pre> {JSON.stringify(user, null, 2)} </pre>
     </>
   )
