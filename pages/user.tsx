@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { supabase } from '../utils/supabase'
@@ -8,14 +8,32 @@ import UserForm from '../components/userForm'
 const User = () => {
   const { user } = useUser()
   const [isEdit, setEdit] = useState(false)
+  const [editables, setEditables] = useState({})
 
-  const entries: Array<[string, any]> = user && Object.entries(user)
+  useEffect(() => {
+    const fromAuth = ['aud', 'email', 'email_confirmed_at', 'phone', 'confirmed_at', 'last_sign_in_at', 'app_metadata', 'user_metadata', 'identities', 'created_at', 'updated_at']
+    const hidden = ['stripe_customer', 'is_subscribed', 'interval']
+
+    if (user) {
+
+      const filteredUsers = Object.keys(user)
+        .filter(key => !fromAuth.includes(key))
+        .filter(key => !hidden.includes(key))
+        .reduce((obj, key) => {
+          obj[key] = user[key];
+          return obj;
+        }, {});
+
+      setEditables(filteredUsers)
+    }
+  }, [user])
+
 
   const sendData = (e: { preventDefault: () => void }, content: any) => {
     e.preventDefault()
     console.log('content', content)
 
-    const {id, aud, email, email_confirmed_at, phone, confirmed_at, last_sign_in_at, app_metadata, user_metadata, identities, created_at, updated_at, ...rest} = content
+    const { id, aud, email, email_confirmed_at, phone, confirmed_at, last_sign_in_at, app_metadata, user_metadata, identities, created_at, updated_at, ...rest } = content
 
     const updateUserProfile = async () => {
       const { error } = await supabase
@@ -28,6 +46,7 @@ const User = () => {
     updateUserProfile()
   }
 
+console.log(editables)
 
   return (
     <>
@@ -36,20 +55,19 @@ const User = () => {
 
       {isEdit ? (
         <>
-          <UserForm sendData={sendData} data={user} />
+          <UserForm sendData={sendData} data={editables} />
         </>
       ) : (
         <div className='m-2 overflow-hidden'>
-2         <Image src='https://robohash.org/autquiaut.png?size=250x250&set=set3' alt='robohash' width='250' height='250' />
-          <>
-            {entries?.map(([key, value], i) => (
-              <div key={i}>
-                <span> {key} </span>
-                <span> {JSON.stringify(value, null, 2)} </span>
-              </div>
-            ))
-            }
-          </>
+          <Image src='https://robohash.org/autquiaut.png?size=250x250&set=set3' alt='robohash' width='250' height='250' />
+
+          {Object.entries(editables)?.map(([key, value], i) => (
+            <div key={i}>
+              <span> {key} </span>
+              <span> {JSON.stringify(value, null, 2)} </span>
+            </div>
+          ))}
+
         </div>
       )}
 
