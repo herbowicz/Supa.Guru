@@ -19,12 +19,17 @@ export default function Welcome() {
     console.log({ session })
     // router.push('/profile')
     return (
-      <div className='flex flex-col bg-green-900/10 p-5'>
+      <div className='flex flex-col bg-green-900/10 p-5 text-center'>
         <Image className={`mx-auto`} src='https://robohash.org/autquiaut.png?size=250x250&set=set2' alt='robohash' width='250' height='250' />
-        <p className={`my-5 text-2xl text-center`}>
+        <p className={`my-5 text-2xl`}>
           Welcome {session.user.email}
         </p>
-        <p className={`text-xs text-center`}>
+
+        <p className={`p-5 text-xl`}>
+          Let the Journey Begin!
+        </p>
+
+        <p className={`text-xs`}>
           {JSON.stringify(session.user, null, 2)}
         </p>
       </div>
