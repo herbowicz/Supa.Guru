@@ -29,7 +29,7 @@ export default function Welcome() {
           Let the Journey Begin!
         </p>
 
-        <p className={`text-xs`}>
+        <p className={`text-xs w-full overflow-hidden`}>
           {JSON.stringify(session.user, null, 2)}
         </p>
       </div>
