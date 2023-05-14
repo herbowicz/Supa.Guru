@@ -60,7 +60,7 @@ const User = () => {
           {Object.entries(editables)?.map(([key, value], i) => (
             <div key={i}>
               <span> {key} </span>
-              <span> {value} </span>
+              <span> {String(value)} </span>
             </div>
           ))}
 
