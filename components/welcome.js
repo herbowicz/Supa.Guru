@@ -1,7 +1,7 @@
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
-import SelectAvatar from './SelectAvatar'
+import SelectAvatar from './selectAvatar'
 
 export default function Welcome() {
   const session = useSession()
