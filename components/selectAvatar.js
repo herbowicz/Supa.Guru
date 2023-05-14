@@ -9,8 +9,10 @@ export default function SelectAvatar() {
         <div className='flex flex-col bg-green-100/1 p-5 text-center'>
             <Image className={`mx-auto`} src='https://robohash.org/autquiaut.png?size=250x250&set=set2' alt='robohash' width='250' height='250' />
 
-            <p className={`p-5 text-xl`}>
-                Select your Avatar
+            <p className={`p-2`}>
+                <span className={`text-xl`}>{user?.email}</span>
+                <br />
+                <span className={``}>Select your Avatar</span>
             </p>
 
             <p>
