@@ -39,8 +39,8 @@ const User = () => {
           <UserForm sendData={sendData} data={user} />
         </>
       ) : (
-        <div className="m-5">
-          <Image src='https://robohash.org/autquiaut.png?size=250x250&set=set3' alt='robohash' width='250' height='250' />
+        <div className='m-2 overflow-hidden'>
+2         <Image src='https://robohash.org/autquiaut.png?size=250x250&set=set3' alt='robohash' width='250' height='250' />
           <>
             {entries?.map(([key, value], i) => (
               <div key={i}>

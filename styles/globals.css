@@ -6,6 +6,7 @@
   --foreground-rgb: 222,222,222;
   --background-start-rgb: 221, 221, 222;
   --background-end-rgb: 255, 255, 255;
+  --main: chartreuse;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,6 +18,6 @@
 }
 
 body {
-  color: #efefef;
+  color: var(--main);
   background: rgb(22,25,22);
 }
