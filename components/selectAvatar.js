@@ -4,7 +4,7 @@ import { useUser } from '../context/user'
 
 export default function SelectAvatar() {
     const { user } = useUser()
-    const [i, setI] = useState(1)
+    const [i, setI] = useState(2)
     
     return (
         <div className='flex flex-col bg-green-100/1 p-5 text-center'>
