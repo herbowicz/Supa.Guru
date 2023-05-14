@@ -13,18 +13,19 @@ const UserForm = ({ sendData = {}, data = {} }) => {
     const capitalized = word => word.charAt(0).toUpperCase() + word.slice(1)
 
     return (
-        <div className='mx-auto p-5'>
+        <div className='mx-auto py-5'>
             <form onSubmit={e => submit(e, content)}>
                 <div className='grid gap-4 mb-2 md:grid-cols-2'>
                     {Object.keys(content).map((el, i) => {
-                        const disabled = el === 'id' || el === 'points'
+                        const disabled = ['id', 'points'].includes(el)
+
                         return (
                             <div key={i} className='relative'>
-                                <input disabled={disabled} className='peer pt-7 pb-2 px-3 border border-gray-300 bg-gray-800 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full' type="text"
-                                    placeholder={data[el]}
-                                    onChange={e => updateContent(e, el)}
+                                <input disabled={disabled} className={`peer pt-7 pb-2 px-3 border border-green-400 ${disabled || `bg-gray-900`} rounded-lg focus:text-white focus:ring-blue-500 focus:border-blue-500 block w-full`} type="text"
+                                    placeholder={data[el]} 
+                                    onChange={(e) => updateContent(e, el)}
                                     value={content[el]} />
-                                <label className='absolute left-2 top-1 text-gray-300 text-sm '>{capitalized(el)}</label>
+                                <label className='absolute left-2 top-1 text-pink-300 text-sm '>{capitalized(el)}</label>
                             </div>
                         )
                     })}

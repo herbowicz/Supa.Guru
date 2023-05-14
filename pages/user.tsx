@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
 import { supabase } from '../utils/supabase'
 import { useUser } from '../context/user'
@@ -19,7 +18,7 @@ const User = () => {
       const filteredUsers = Object.keys(user)
         .filter(key => !fromAuth.includes(key))
         .filter(key => !hidden.includes(key))
-        .reduce((obj, key) => {
+        .reduce((obj: Record<string, number>, key) => {
           obj[key] = user[key];
           return obj;
         }, {});
@@ -46,11 +45,8 @@ const User = () => {
     updateUserProfile()
   }
 
-console.log(editables)
-
   return (
-    <>
-      <Link href="/"> Home </Link>
+    <div className='mx-auto p-5'>
       <div> Hello {user?.email} </div>
 
       {isEdit ? (
@@ -58,13 +54,13 @@ console.log(editables)
           <UserForm sendData={sendData} data={editables} />
         </>
       ) : (
-        <div className='m-2 overflow-hidden'>
-          <Image src='https://robohash.org/autquiaut.png?size=250x250&set=set3' alt='robohash' width='250' height='250' />
+        <div className='w-full bg-violet-500/5 mx-auto m-5 p-5 overflow-hidden text-center'>
+          <Image src='https://robohash.org/autquiaut.png?size=250x250&set=set3' alt='robohash' width='250' height='250' className='rounded-full bg-green-400/50 mx-auto mb-5'/>
 
           {Object.entries(editables)?.map(([key, value], i) => (
             <div key={i}>
               <span> {key} </span>
-              <span> {JSON.stringify(value, null, 2)} </span>
+              <span> {value} </span>
             </div>
           ))}
 
@@ -72,11 +68,11 @@ console.log(editables)
       )}
 
       <div className='my-2'>
-        <button onClick={() => setEdit(!isEdit)}>
+        <button className='text-white bg-blue-700 hover:bg-blue-800 rounded-lg px-5 py-2' onClick={() => setEdit(!isEdit)}>
           {isEdit ? 'Close' : 'Edit'}
         </button>
       </div>
-    </>
+    </div>
   )
 }
 
