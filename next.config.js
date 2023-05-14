@@ -7,6 +7,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'files.stripe.com',
         port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'robohash.org',
+        port: '',
       }
     ]
   }
