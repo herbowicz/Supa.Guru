@@ -11,7 +11,7 @@ export default function SelectAvatar() {
             <Image className={`mx-auto`} src={`https://robohash.org/autquiaut.png?size=250x250&set=set${i}`} alt='robohash' width='250' height='250' />
 
             <p className={`p-2`}>
-                <span className={`text-3xl`}>{user?.email}</span>
+                <span className={``}>{user?.email}</span>
                 <br />
                 <span className={`text-xl font-thin`}>Select your Avatar</span>
             </p>
