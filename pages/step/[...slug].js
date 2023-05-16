@@ -41,9 +41,9 @@ const I = () => {
     }
     
     return (
-        <div onClick={() => nextPage()} className='flex flex-col align-center justify-around w-3/4 mx-auto bg-violet-900 mt-5 p-10 cursor-pointer'>
+        <div onClick={() => nextPage()} className='flex flex-col align-center justify-around w-3/4 mx-auto bg-pink-900 p-5 cursor-pointer'>
             {/* <h3> slug {slug} </h3> */}
-            <h2 className={`w-3/4 text-3xl mx-auto m-10 p-10`}>{say()}</h2>
+            <h2 className='w-3/4 text-3xl mx-auto m-5 p-5'>{say()}</h2>
             
         </div>
     )
