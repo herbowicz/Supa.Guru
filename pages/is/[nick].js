@@ -26,7 +26,7 @@ const Nick = () => {
 
     return (
         <div className="flex flex-col align-center justify-around bg-violet-900 mt-5 p-10">
-            <h3><p>Profile </p></h3>
+            <h3><p>Profile {nick}</p></h3>
             <hr />
             <div className="flex flex-col mt-10">
                 <div>

@@ -11,6 +11,7 @@ const Nav = () => {
             <Link href='/shop'>Shop</Link>
             <Link href='/user'>User</Link>
             <Link href='/notes'>Notes</Link>
+            <Link href='/step/0'>BS</Link>
             {user && <Link href='/logout'>Logout</Link>}
         </nav>
     )
