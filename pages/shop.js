@@ -1,16 +1,21 @@
 import initStripe from 'stripe'
 import Image from 'next/image'
+import axios from 'axios'
 import { useUser } from '../context/user'
 
 const Shop = ({ products, isLoading }) => {
     const { user, login } = useUser()
 
-    const showSubscribeButton = !!user && !user.is_subscribed
-    const showCreateAccountButton = !user
-    const showManageSubscriptionButton = !!user && user.is_subscribed
-
     const processSubscription = priceId => {
+        
         console.log(priceId)
+        console.log({user})
+        
+        // const getSub = async () => {
+        //     const { data } = await axios.get(`/api/subscription/${priceId}`)
+        // }
+
+        // getSub().then(data => console.log(data))
     }
 
     return (
@@ -22,13 +27,13 @@ const Shop = ({ products, isLoading }) => {
                     <p className='text-grey-500'>
                         {el.price / 100} PLN / {el.interval}
                     </p>
-                    {isLoading || (
-                        <> 
-                            {showSubscribeButton && <button onClick={() => processSubscription(el.id)}>Subscribe</button>}
-                            {showCreateAccountButton && <button onClick={login}>Create Account</button>}
-                            {showManageSubscriptionButton && <button onClick={login}>Manage Subscription</button>}
-                        </>
+                    {isLoading || (user?.is_subscribed ? (
+                        <button onClick={login}>Manage Subscription</button>
+                    ) : (
+                        <button onClick={() => processSubscription(el.id)}>Subscribe</button>
+                    )
                     )}
+
                 </div>
             ))}
             <hr />
@@ -65,4 +70,5 @@ export const getStaticProps = async () => {
         }
     }
 }
+
 export default Shop
